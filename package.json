@@ -1,0 +1,23 @@
+{
+  "name": "chalkboard-radio-app",
+  "version": "1.0.0",
+  "description": "반응형 칠판 라디오 웹앱 - 3D 종이비행기 애니메이션 및 AI DJ 희망곡 검색",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vite",
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "chalkboard",
+    "origami",
+    "ai-dj",
+    "youtube-music"
+  ],
+  "author": "Antigravity",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}
