@@ -21,10 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let stories = [];
 
-  // 기본 초기 사연 (가이드 데이터)
-  const defaultStories = [
-    { nickname: '낭만청춘', story: '힘든 시기에 늘 저를 위로해 주었던 노래입니다. 막막하다는 기분이 들 때, 이 노래를 흥얼거리면 마법처럼 힘이 났어요!', song: '옥상달빛 - 수고했어 오늘도', x: 35, y: 55, rotation: -3 }
-  ];
 
   // --- Realtime Data Synchronization (실시간 데이터 동기화) ---
   const listenToStories = () => {
