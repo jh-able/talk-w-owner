@@ -352,7 +352,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const story = inputStory.value.trim();
     const song = inputSong.value.trim();
 
-    if (!nickname || !story || !song) return;
+    if (!nickname || !story ) return;
 
     const surfaceRect = chalkboard.getBoundingClientRect();
     const paperRect = storyFormPaper.getBoundingClientRect();
@@ -378,7 +378,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const newStoryData = {
           nickname,
           story,
-          song,
           x: endXPercent,
           y: endYPercent,
           rotation: randomRotation,
