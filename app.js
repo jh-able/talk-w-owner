@@ -285,8 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     setTimeout(() => {
       landingPortal.classList.add('hidden');
-      showModal(modalNotice); // [추가] 접속 시 안내사항 팝업 노출
-    }, 600);
+      showModal(modalNotice);
   });
 
   // Show DJ Login
@@ -318,8 +317,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
       setTimeout(() => {
         landingPortal.classList.add('hidden');
-        showModal(modalNotice); // [추가] 접속 시 안내사항 팝업 노출
-      }, 600);
+        showModal(modalNotice);
     } else {
       loginErrorMsg.classList.remove('hidden');
       const portalCard = document.querySelector('.portal-card');
