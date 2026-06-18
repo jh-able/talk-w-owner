@@ -1122,45 +1122,7 @@ body {
     height: 90px;
   }
 
-  /* Detail Card Modal - Stack LP Vertically */
-  .modal-wrapper {
-    flex-direction: column;
-    gap: 20px;
-  }
 
-  .detail-story-panel {
-    padding: 24px 16px;
-    width: 95%;
-  }
-
-  .detail-lp-panel {
-    margin-left: 0;
-    margin-top: -20px; /* 모바일: 살짝만 겹치도록 조정 */
-    transform: translateY(-80px) rotate(-180deg) scale(0.6);
-    width: 160px;
-    height: 160px;
-  }
-
-  .detail-lp-panel.active {
-    transform: translateY(0) rotate(0deg) scale(1);
-  }
-  
-  .vinyl-record {
-    width: 150px;
-    height: 150px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-  }
-
-  .vinyl-label {
-    width: 48px;
-    height: 48px;
-  }
-
-  .requested-song-badge {
-    padding: 8px 12px;
-    font-size: 0.85rem;
-  }
-}
 
 /* ==========================================================
    🔑 LANDING PORTAL SCREEN (최초 접속 화면)
