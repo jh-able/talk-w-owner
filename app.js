@@ -14,39 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
   appId: "1:891896577562:web:0ee0cca7640e57edd15ba3"
   };
 
-  // Firebase 및 Firestore 초기화
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
   const collectionRef = db.collection('chalkboard_stories');
 
   let stories = [];
-
-
-  // --- Realtime Data Synchronization (실시간 데이터 동기화) ---
-  const listenToStories = () => {
-    collectionRef.onSnapshot((snapshot) => {
-      stories = [];
-      snapshot.forEach((doc) => {
-        stories.push({
-          id: doc.id,
-          ...doc.data()
-        });
-      });
-      
-      // 만약 DB가 완전히 비어있다면 디폴트 사연 생성 후 즉시 리턴
-      if (stories.length === 0 && snapshot.empty) {
-        defaultStories.forEach(async (item) => {
-          await collectionRef.add({ ...item, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
-        });
-        return; 
-      }
-
-      // 화면 새로 그리기 및 카운터 업데이트
-      renderAllNotes();
-    }, (error) => {
-      console.error("Firestore listen error: ", error);
-    });
-  };
 
   // ==========================================
   // --- DOM Elements ---
@@ -96,26 +68,36 @@ document.addEventListener('DOMContentLoaded', () => {
   // Detail elements
   const detailNickname = document.getElementById('detail-nickname');
   const detailStory = document.getElementById('detail-story');
-
-  const btnDeleteStory = document.getElementById('btn-delete-story');
-  const btnYoutubeLink = document.getElementById('btn-youtube-link');
-  const btnYoutubeText = document.getElementById('btn-youtube-text');
   const detailLpPanel = document.getElementById('detail-lp-panel');
+  const btnDeleteStory = document.getElementById('btn-delete-story');
 
   let activeStoryId = null;
   let pendingDeleteStoryId = null;
   let isDJMode = false;
-
+  
+  // ==========================================
   // --- Modal Utilities ---
+  // ==========================================
+
   const showModal = (modal) => { modal.classList.remove('hidden'); };
   const hideModal = (modal) => { modal.classList.add('hidden'); };
-
+  
+  // ==========================================
   // --- Counter Stats ---
+  // ==========================================
   const updateStats = () => {
     storyCounter.textContent = `: ${stories.length}개`;
   };
 
+ // ==========================================
   // --- Sticky Note Rendering ---
+  // ==========================================
+  const escapeHTML = (str) => {
+    return str.replace(/[&<>'"]/g,
+      tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+    );
+  };
+  
   const renderNote = (story) => {
     const note = document.createElement('div');
     note.className = 'chalk-sticky-note';
@@ -130,7 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="note-story-snippet">${escapeHTML(story.story)}</div>
      
     `;
-
     note.addEventListener('click', () => openDetailModal(story));
     notesGrid.appendChild(note);
     lucide.createIcons();
@@ -141,21 +122,24 @@ document.addEventListener('DOMContentLoaded', () => {
     stories.forEach(story => renderNote(story));
     updateStats();
   };
-
-  // Escape HTML helper
-  const escapeHTML = (str) => {
-    return str.replace(/[&<>'"]/g, 
-      tag => ({
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        "'": '&#39;',
-        '"': '&quot;'
-      }[tag] || tag)
-    );
+  // ==========================================
+  // --- Realtime Data Synchronization ---
+  // ==========================================
+  const listenToStories = () => {
+    collectionRef.orderBy('createdAt', 'desc').onSnapshot((snapshot) => {
+      stories = [];
+      snapshot.forEach((doc) => {
+        stories.push({ id: doc.id, ...doc.data() });
+      });
+      renderAllNotes();
+    }, (error) => {
+      console.error("Firestore listen error: ", error);
+    });
   };
 
+  // ==========================================
   // --- Open Detail View ---
+  // ==========================================
   const openDetailModal = (story) => {
     activeStoryId = story.id;
     detailNickname.textContent = story.nickname;
@@ -168,7 +152,9 @@ document.addEventListener('DOMContentLoaded', () => {
     detailLpPanel.classList.add('active');
   };
 
+   // ==========================================
   // --- Delete Story ---
+  // ==========================================
   btnDeleteStory.addEventListener('click', () => {
     if (!activeStoryId) return;
     pendingDeleteStoryId = activeStoryId;
@@ -185,16 +171,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     try {
-      await collectionRef.doc(pendingDeleteStoryId).delete();
-      setTimeout(() => {
-        hideModal(modalConfirm);
-        hideModal(modalDetail);
-        detailLpPanel.classList.remove('active');
-        pendingDeleteStoryId = null;
-      }, 300);
-    } catch (error) {
-      alert("사연 삭제에 실패했습니다: " + error.message);
-    }
+      await 
+    hideModal(modalConfirm);
+    hideModal(modalDetail);
+    detailLpPanel.classList.remove('active');
+    const idToDelete = pendingDeleteStoryId;
+    pendingDeleteStoryId = null;
+    collectionRef.doc(idToDelete).delete().catch((error) => {
+      console.error("삭제 실패:", error);
+      alert("삭제에 실패했습니다: " + error.message);
+    });
   });
 
   btnConfirmNo.addEventListener('click', () => {
@@ -223,9 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         const snapshot = await collectionRef.get();
         const batch = db.batch();
-        snapshot.forEach((doc) => {
-          batch.delete(doc.ref);
-        });
+        snapshot.forEach((doc) => { batch.delete(doc.ref); });
         await batch.commit();
       } catch (error) {
         console.error("전체 삭제 오류:", error);
@@ -244,15 +228,10 @@ document.addEventListener('DOMContentLoaded', () => {
     detailLpPanel.classList.remove('active');
     hideModal(modalDetail);
   });
-  // [추가] 안내사항 닫기 버튼 이벤트
-  btnCloseNotice.addEventListener('click', () => {
-    hideModal(modalNotice);
-  });
-  // [추가] 안내사항 버튼 클릭 시 모달 열기 이벤트
-  btnNotice.addEventListener('click', () => {
-    showModal(modalNotice);
-  });
-  // Close modals when user clicks outside modal boundary
+ 
+  btnCloseNotice.addEventListener('click', () => { hideModal(modalNotice); });
+  btnNotice.addEventListener('click', () => { showModal(modalNotice); });
+
   [modalWrite, modalDetail, modalNotice].forEach(modal => {
   modal.addEventListener('click', (e) => {
     if (e.target === modal) {
@@ -380,6 +359,11 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       createPaperAirplaneFlight(startX, startY, endX, endY, async () => {
         createChalkDustPuff(endX, endY);
+        
+ // 모달을 즉시 닫아 UI가 멈추지 않도록 처리
+        hideModal(modalWrite);
+        storyFormPaper.classList.remove('folding-prep', 'fold-collapse');
+        storyForm.reset();
 
         const newStoryData = {
           nickname,
