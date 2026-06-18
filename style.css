@@ -1489,3 +1489,31 @@ body {
 .btn-confirm:active {
   transform: translateY(1px);
 }
+/* --- [추가] 안내사항 버튼 및 모달 스타일 --- */
+.btn-notice-chalk {
+  position: absolute;
+  top: 15px;
+  left: 24px;
+  z-index: 30;
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(0, 0, 0, 0.2);
+}
+.notice-paper-form {
+  max-width: 500px !important;
+}
+.notice-content {
+  padding-left: 10px;
+  font-family: var(--font-handwritten);
+  font-size: 1.45rem;
+  line-height: 1.6;
+  color: var(--paper-text);
+  white-space: pre-wrap;
+  word-break: keep-all;
+}
+.notice-content p {
+  margin-bottom: 14px;
+}
+.notice-content .notice-highlight {
+  color: hsl(355, 60%, 45%);
+  font-weight: 700;
+}
