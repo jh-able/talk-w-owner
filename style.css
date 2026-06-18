@@ -1498,22 +1498,44 @@ body {
   border-color: rgba(255, 255, 255, 0.4);
   background: rgba(0, 0, 0, 0.2);
 }
+
 .notice-paper-form {
+  width: 90%;                    /* [변경] 모바일 등 500px 미만 화면에서 가로 90%로 자동 조정 */
   max-width: 500px !important;
 }
+
 .notice-content {
   padding-left: 10px;
   font-family: var(--font-handwritten);
-  font-size: 1.45rem;
-  line-height: 1.6;
+  font-size: 1.35rem;            /* [변경] 본문 폰트 크기 미세 조정 */
+  line-height: 1.45;             /* [변경] 줄 간격을 1.6에서 1.45로 좁힘 */
   color: var(--paper-text);
   white-space: pre-wrap;
   word-break: keep-all;
 }
+
 .notice-content p {
-  margin-bottom: 14px;
+  margin-bottom: 8px;            /* [변경] 문단 간 간격을 14px에서 8px로 좁힘 */
 }
+
 .notice-content .notice-highlight {
   color: hsl(355, 60%, 45%);
   font-weight: 700;
+}
+
+/* [추가] 모바일 반응형 및 간격 최적화 (768px 이하 디바이스) */
+@media (max-width: 768px) {
+  .notice-paper-form {
+    width: 92%;                  /* 모바일 화면에서 칠판 대비 92% 너비 차지 */
+    padding: 25px 15px !important; /* 내부 여백을 줄여 글자가 더 넓게 채워지도록 함 */
+  }
+  
+  .notice-content {
+    font-size: 1.15rem;          /* 모바일 기기에 맞는 폰트 크기 축소 */
+    line-height: 1.35;           /* 줄 간격을 조금 더 좁게 만듦 */
+  }
+  
+  .notice-content p {
+    margin-bottom: 6px;          /* 문단 간격을 6px로 최적화 */
+  }
 }
