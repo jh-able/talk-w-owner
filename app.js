@@ -253,15 +253,16 @@ document.addEventListener('DOMContentLoaded', () => {
     showModal(modalNotice);
   });
   // Close modals when user clicks outside modal boundary
-  [modalWrite, modalDetail].forEach(modal => {
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
- if (modal === modalDetail) {
+  [modalWrite, modalDetail, modalNotice].forEach(modal => {
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      if (modal === modalDetail) {
         detailLpPanel.classList.remove('active');
-        hideModal(modal);
       }
-    });
+      hideModal(modal);
+    } // <-- 누락된 닫는 중괄호 추가
   });
+});
 
   // ==========================================
   // --- Portal & DJ Login Handlers (복원 파트) ---
@@ -278,15 +279,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Guest Enter
   btnEnterGuest.addEventListener('click', () => {
-    isDJMode = false;
-    sessionStorage.setItem('visible_radio_role', 'guest');
-    applyRoleSettings();
-    landingPortal.classList.add('portal-slide-up');
-    
-    setTimeout(() => {
-      landingPortal.classList.add('hidden');
-      showModal(modalNotice);
-  });
+  isDJMode = false;
+  sessionStorage.setItem('visible_radio_role', 'guest');
+  applyRoleSettings();
+  landingPortal.classList.add('portal-slide-up');
+  
+  setTimeout(() => {
+    landingPortal.classList.add('hidden');
+    showModal(modalNotice);
+  }, 600); // <-- 중괄호, 닫는 괄호, 시간 지정 추가
+}); // <-- 클릭 리스너 닫기 추가
 
   // Show DJ Login
   btnShowDjLogin.addEventListener('click', () => {
@@ -305,20 +307,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // DJ Login Submit (ID: admin, PW: admin4250)
   djLoginForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const idVal = loginId.value.trim();
-    const pwVal = loginPw.value.trim();
-
-    if (idVal === 'admin' && pwVal === 'admin4250') {
-      isDJMode = true;
-      sessionStorage.setItem('visible_radio_role', 'dj');
-      applyRoleSettings();
-      landingPortal.classList.add('portal-slide-up');
-      
-      setTimeout(() => {
-        landingPortal.classList.add('hidden');
-        showModal(modalNotice);
-    } else {
+  e.preventDefault();
+  const idVal = loginId.value.trim();
+  const pwVal = loginPw.value.trim();
+  if (idVal === 'admin' && pwVal === 'admin4250') {
+    isDJMode = true;
+    sessionStorage.setItem('visible_radio_role', 'dj');
+    applyRoleSettings();
+    landingPortal.classList.add('portal-slide-up');
+    
+    setTimeout(() => {
+      landingPortal.classList.add('hidden');
+      showModal(modalNotice);
+    }, 600); // <-- 닫기 및 시간 추가
+  } else { // <-- if 블록의 닫는 중괄호 추가
       loginErrorMsg.classList.remove('hidden');
       const portalCard = document.querySelector('.portal-card');
       portalCard.classList.remove('shake-animation');
