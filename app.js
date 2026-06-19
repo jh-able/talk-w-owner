@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize Lucide Icons
   lucide.createIcons();
 
-  
   // ==========================================
   // --- Firebase & Firestore Configuration ---
   // ==========================================
@@ -76,11 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Modals
   const modalWrite = document.getElementById('modal-write');
   const modalDetail = document.getElementById('modal-detail');
-  const modalNotice = document.getElementById('modal-notice'); // [추가]
   const btnCloseWrite = document.getElementById('btn-close-write');
   const btnCloseDetail = document.getElementById('btn-close-detail');
-  const btnCloseNotice = document.getElementById('btn-close-notice'); // [추가]
-  const btnNotice = document.getElementById('btn-notice'); // [추가]
 
   // Custom Deletion Confirm Modal Elements
   const modalConfirm = document.getElementById('modal-confirm');
@@ -245,25 +241,15 @@ document.addEventListener('DOMContentLoaded', () => {
     detailLpPanel.classList.remove('active');
     hideModal(modalDetail);
   });
-  // [추가] 안내사항 닫기 버튼 이벤트
-  btnCloseNotice.addEventListener('click', () => {
-    hideModal(modalNotice);
-  });
-  // [추가] 안내사항 버튼 클릭 시 모달 열기 이벤트
-  btnNotice.addEventListener('click', () => {
-    showModal(modalNotice);
-  });
-  // Close modals when user clicks outside modal boundary
-  [modalWrite, modalDetail, modalNotice].forEach(modal => {
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      if (modal === modalDetail) {
+
+  [modalWrite, modalDetail].forEach(modal => {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
         detailLpPanel.classList.remove('active');
+        hideModal(modal);
       }
-      hideModal(modal);
-    } // <-- 누락된 닫는 중괄호 추가
+    });
   });
-});
 
   // ==========================================
   // --- Portal & DJ Login Handlers (복원 파트) ---
@@ -280,16 +266,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Guest Enter
   btnEnterGuest.addEventListener('click', () => {
-  isDJMode = false;
-  sessionStorage.setItem('visible_radio_role', 'guest');
-  applyRoleSettings();
-  landingPortal.classList.add('portal-slide-up');
-  
-  setTimeout(() => {
-    landingPortal.classList.add('hidden');
-    showModal(modalNotice);
-  }, 600); // <-- 중괄호, 닫는 괄호, 시간 지정 추가
-}); // <-- 클릭 리스너 닫기 추가
+    isDJMode = false;
+    sessionStorage.setItem('visible_radio_role', 'guest');
+    applyRoleSettings();
+    landingPortal.classList.add('portal-slide-up');
+    setTimeout(() => { hideModal(landingPortal); }, 600);
+  });
 
   // Show DJ Login
   btnShowDjLogin.addEventListener('click', () => {
@@ -308,20 +290,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // DJ Login Submit (ID: admin, PW: admin4250)
   djLoginForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const idVal = loginId.value.trim();
-  const pwVal = loginPw.value.trim();
-  if (idVal === 'admin' && pwVal === 'admin4250') {
-    isDJMode = true;
-    sessionStorage.setItem('visible_radio_role', 'dj');
-    applyRoleSettings();
-    landingPortal.classList.add('portal-slide-up');
-    
-    setTimeout(() => {
-      landingPortal.classList.add('hidden');
-      showModal(modalNotice);
-    }, 600); // <-- 닫기 및 시간 추가
-  } else { // <-- if 블록의 닫는 중괄호 추가
+    e.preventDefault();
+    const idVal = loginId.value.trim();
+    const pwVal = loginPw.value.trim();
+
+    if (idVal === 'admin' && pwVal === 'admin4250') {
+      isDJMode = true;
+      sessionStorage.setItem('visible_radio_role', 'dj');
+      applyRoleSettings();
+      landingPortal.classList.add('portal-slide-up');
+      setTimeout(() => { hideModal(landingPortal); }, 600);
+    } else {
       loginErrorMsg.classList.remove('hidden');
       const portalCard = document.querySelector('.portal-card');
       portalCard.classList.remove('shake-animation');
