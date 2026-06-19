@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const btnDeleteStory = document.getElementById('btn-delete-story');
   const btnYoutubeLink = document.getElementById('btn-youtube-link');
-  const btnYoutubeText = document.getElementById('btn-youtube-text');
+  const btnYoutubeText = document.getElementById('btn-youtube-text');  
   const detailLpPanel = document.getElementById('detail-lp-panel');
 
   let activeStoryId = null;
@@ -128,7 +128,6 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="pushpin"></div>
       <div class="note-nickname">${escapeHTML(story.nickname)}</div>
       <div class="note-story-snippet">${escapeHTML(story.story)}</div>
-     
     `;
 
     note.addEventListener('click', () => openDetailModal(story));
@@ -244,10 +243,12 @@ document.addEventListener('DOMContentLoaded', () => {
     detailLpPanel.classList.remove('active');
     hideModal(modalDetail);
   });
+  
 // [추가] 안내사항 닫기 버튼 이벤트
   btnCloseNotice.addEventListener('click', () => {
     hideModal(modalNotice);
   });
+  
   // [추가] 안내사항 버튼 클릭 시 모달 열기 이벤트
   btnNotice.addEventListener('click', () => {
     showModal(modalNotice);
@@ -285,7 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
     applyRoleSettings();
     landingPortal.classList.add('portal-slide-up');
     setTimeout(() => { landingPortal.classList.add('hidden');
-      showModal(modalNotice); // [추가] 접속 시 안내사항 팝업 노출
+      showModal(modalNotice);
     }, 600);
   });
   // Show DJ Login
@@ -314,7 +315,10 @@ document.addEventListener('DOMContentLoaded', () => {
       sessionStorage.setItem('visible_radio_role', 'dj');
       applyRoleSettings();
       landingPortal.classList.add('portal-slide-up');
-      setTimeout(() => { hideModal(landingPortal); }, 600);
+        setTimeout(() => {
+        landingPortal.classList.add('hidden');
+        showModal(modalNotice);
+      }, 600);
     } else {
       loginErrorMsg.classList.remove('hidden');
       const portalCard = document.querySelector('.portal-card');
@@ -330,13 +334,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (savedRole === 'dj') {
       isDJMode = true;
       applyRoleSettings();
-      landingPortal.style.display = 'none';
-      hideModal(landingPortal);
+       landingPortal.style.display = 'none';
+      landingPortal.classList.add('hidden');
     } else if (savedRole === 'guest') {
       isDJMode = false;
       applyRoleSettings();
       landingPortal.style.display = 'none';
-      hideModal(landingPortal);
+      landingPortal.classList.add('hidden');
     } else {
       isDJMode = false;
       applyRoleSettings();
