@@ -101,14 +101,6 @@
         <!-- SVG Chalkboard Dust & Drawings overlay -->
         <div class="chalkboard-overlay"></div>
         
-         <!-- 바로 하단 안내사항 버튼 -->
-        <button id="btn-notice" class="btn-chalk btn-notice-chalk" aria-label="안내사항 보기">
-          <i data-lucide="info"></i>
-          <span>안내사항</span>
-        </button>
-        
-        <!-- Chalkboard Grid for Pinned Notes -->
-        <div class="notes-container" id="notes-grid">
         <!-- Chalkboard Grid for Pinned Notes -->
         <div class="notes-container" id="notes-grid">
           <!-- Dynamic sticky notes will be loaded here -->
@@ -218,8 +210,16 @@
           </div>
           <div class="detail-note-footer">
             <div class="detail-footer-inner">
-          
-            
+              <div class="requested-song-badge">
+                <i data-lucide="music-4"></i>
+                <span id="detail-requested-song">가수 - 제목</span>
+              </div>
+              <div class="youtube-play-wrapper">
+                <a href="#" id="btn-youtube-link" target="_blank" class="btn-youtube-play">
+                  <i data-lucide="play" class="play-icon"></i>
+                  <span id="btn-youtube-text">유튜브에서 희망곡 듣기</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -257,7 +257,7 @@
       <div class="confirm-icon-holder">
         <i data-lucide="help-circle" class="confirm-icon"></i>
       </div>
-      <p class="confirm-message">질문을 정말 지우시겠습니까?</p>
+      <p class="confirm-message">사연을 정말 지우시겠습니까?</p>
       <div class="confirm-actions">
         <button id="btn-confirm-yes" class="btn-confirm yes">네</button>
         <button id="btn-confirm-no" class="btn-confirm no">아니오</button>
@@ -266,26 +266,7 @@
   </div>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-  <!-- [추가] POPUP 4: 안내사항 팝업 모달 -->
-  <div class="modal-overlay hidden" id="modal-notice">
-    <div class="modal-wrapper">
-      <div class="pastel-paper-form notice-paper-form">
-        <button class="btn-close-paper" id="btn-close-notice" aria-label="닫기">
-          <i data-lucide="x"></i>
-        </button>
-        
-        <div class="paper-header">
-          <h2>📢 안내사항</h2>
-          <p class="paper-sub"> 대표이사와의 대화 안내</p>
-        </div>
-        <div class="notice-content">
-          <p>오늘 이 시간은 대표이사님과 함께 회사의 미래와 비전을 공유하고,<br>여러분의 반짝이는 생각과 궁금증을 자유롭게 나누는 시간입니다.</p>
-          <p class="notice-highlight">"대표이사님은 신입사원 때 어떠셨을까?"<br>"우리회사는 어떤 장점이 있을까?"</p>
-          <p>입사 준비하면서 궁금했던 점이나 떠오르는 질문들을 남겨주세요.<br>여러분의 적극적인 참여가 더욱 풍성하고 의미 있는 시간을 만듭니다 :)</p>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- Global Audio Element for visual effects (Optional/Simulated) -->
   <script src="app.js"></script>
 </body>
 </html>
