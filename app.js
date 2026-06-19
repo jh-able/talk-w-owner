@@ -73,10 +73,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const djModeBadge = document.getElementById('dj-mode-badge');
 
   // Modals
-  const modalWrite = document.getElementById('modal-write');
+ const modalWrite = document.getElementById('modal-write');
   const modalDetail = document.getElementById('modal-detail');
+  const modalNotice = document.getElementById('modal-notice'); 
   const btnCloseWrite = document.getElementById('btn-close-write');
   const btnCloseDetail = document.getElementById('btn-close-detail');
+  const btnCloseNotice = document.getElementById('btn-close-notice'); 
+  const btnNotice = document.getElementById('btn-notice'); 
 
   // Custom Deletion Confirm Modal Elements
   const modalConfirm = document.getElementById('modal-confirm');
@@ -241,11 +244,22 @@ document.addEventListener('DOMContentLoaded', () => {
     detailLpPanel.classList.remove('active');
     hideModal(modalDetail);
   });
-
-  [modalWrite, modalDetail].forEach(modal => {
+// [추가] 안내사항 닫기 버튼 이벤트
+  btnCloseNotice.addEventListener('click', () => {
+    hideModal(modalNotice);
+  });
+  // [추가] 안내사항 버튼 클릭 시 모달 열기 이벤트
+  btnNotice.addEventListener('click', () => {
+    showModal(modalNotice);
+  });
+  
+  // Close modals when user clicks outside modal boundary
+  [modalWrite, modalDetail, modalNotice].forEach(modal => { // [수정] modalNotice 추가
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
-        detailLpPanel.classList.remove('active');
+        if (modal === modalDetail) {
+          detailLpPanel.classList.remove('active');
+        }
         hideModal(modal);
       }
     });
@@ -270,9 +284,10 @@ document.addEventListener('DOMContentLoaded', () => {
     sessionStorage.setItem('visible_radio_role', 'guest');
     applyRoleSettings();
     landingPortal.classList.add('portal-slide-up');
-    setTimeout(() => { hideModal(landingPortal); }, 600);
+    setTimeout(() => { landingPortal.classList.add('hidden');
+      showModal(modalNotice); // [추가] 접속 시 안내사항 팝업 노출
+    }, 600);
   });
-
   // Show DJ Login
   btnShowDjLogin.addEventListener('click', () => {
     portalChoices.classList.add('hidden');
