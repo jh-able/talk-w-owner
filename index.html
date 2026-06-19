@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>무엇이든 물어보CEO! 대표이사와 함께하는 신입사원 소통의 장</title>
+  <title> 무엇이든 물어보CEO! 대표이사와 함께하는 신입사원 소통의 장 | Chalkboard Radio & AI DJ</title>
   <!-- SEO Meta Tags -->
   <meta name="description" content="추억의 초록 칠판에 사연과 희망곡을 적어 종이비행기로 날려보내세요. AI DJ가 분석하여 유튜브에서 음악을 찾아드립니다.">
   <meta name="keywords" content="칠판 라디오, 사연 쓰기, 종이비행기, AI DJ, 유튜브 희망곡, 반응형 웹앱">
@@ -17,7 +17,6 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  
   <!-- LANDING PORTAL SCREEN (최초 접속 화면) -->
   <div class="portal-screen" id="landing-portal">
     <div class="portal-card">
@@ -80,10 +79,10 @@
   </svg>
 
   <div class="app-container">
-    
+    <!-- Wooden Frame Bezel surrounding the Chalkboard -->
     <div class="wooden-bezel">
       
-      <!-- Top Navigation -->
+      <!-- Top Navigation & Chalk-written Title -->
       <header class="chalkboard-header">
         <div class="header-logo">
           <i data-lucide="radio" class="logo-icon animate-pulse"></i>
@@ -99,7 +98,7 @@
 
       <!-- Main Chalkboard Surface -->
       <main class="chalkboard-surface" id="chalkboard">
-       
+        <!-- SVG Chalkboard Dust & Drawings overlay -->
         <div class="chalkboard-overlay"></div>
         
          <!-- 바로 하단 안내사항 버튼 -->
@@ -115,7 +114,7 @@
           <!-- Dynamic sticky notes will be loaded here -->
         </div>
 
-        <!-- Chalk dust drawings  -->
+        <!-- Chalk dust drawings for premium vintage vibe -->
         <div class="chalk-drawings-background">
           <div class="drawing heart-drawing">❤</div>
           <div class="drawing music-note-1">♫</div>
@@ -123,7 +122,7 @@
           <div class="drawing sun-drawing">☀</div>
         </div>
 
-        <!-- Flying paper airplane container -->
+        <!-- Flying paper airplane container (for origami animation) -->
         <div class="animation-viewport" id="animation-viewport"></div>
       </main>
 
@@ -137,14 +136,14 @@
             <div class="chalk blue-chalk" title="파란 분필"></div>
           </div>
           <div class="eraser-holder" id="eraser-holder">
-            <div class="eraser" id="btn-clear-board" title="칠판 지우개 (운영자 전용)">
+            <div class="eraser" id="btn-clear-board" title="칠판 지우개 (DJ 전용)">
               <div class="eraser-felt"></div>
               <div class="eraser-wood">CHALK ERASER</div>
             </div>
           </div>
           <div class="tray-stats">
-             <span id="dj-mode-badge" class="dj-mode-badge hidden">🔑 운영자 모드</span>
-            <span id="story-counter">질문: 0개</span>
+            <span id="dj-mode-badge" class="dj-mode-badge hidden">질문</span>
+            <span id="story-counter">: 0개</span>
           </div>
         </div>
       </footer>
@@ -152,10 +151,11 @@
     </div>
   </div>
 
-  <!-- POPUP 1: WRITE STORY MODAL  -->
+  <!-- POPUP 1: WRITE STORY MODAL (Red Pastel Notebook Paper) -->
   <div class="modal-overlay hidden" id="modal-write">
     <div class="modal-wrapper">
       
+      <!-- The folding paper element -->
       <div class="pastel-paper-form" id="story-form-paper">
         <button class="btn-close-paper" id="btn-close-write" aria-label="닫기">
           <i data-lucide="x"></i>
@@ -196,43 +196,57 @@
     </div>
   </div>
 
-  <!-- POPUP 2: STORY DETAIL  -->
+  <!-- POPUP 2: STORY DETAIL & YOUTUBE PLAYER MODAL -->
   <div class="modal-overlay hidden" id="modal-detail">
     <div class="modal-wrapper" id="detail-modal-wrapper">
-       <!-- Pinned Note Detail Card -->
-      <div class="detail-story-panel red-pastel-theme">
-        <button class="btn-close-detail" id="btn-close-detail" aria-label="닫기">
-          <i data-lucide="x"></i>
-        </button>
-        <div class="detail-note-header">
-          <div class="author-info">
-            <i data-lucide="user" class="header-icon"></i>
-            <span id="detail-nickname" class="note-nickname">닉네임</span>
-          </div>
-          <button id="btn-delete-story" class="btn-delete-note" title="이 질문 삭제하기">
-            <i data-lucide="trash-2"></i>
+        <!-- Pinned Note Detail Card -->
+        <div class="detail-story-panel red-pastel-theme">
+          <button class="btn-close-detail" id="btn-close-detail" aria-label="닫기">
+            <i data-lucide="x"></i>
           </button>
+          <div class="detail-note-header">
+            <div class="author-info">
+              <i data-lucide="user" class="header-icon"></i>
+              <span id="detail-nickname" class="note-nickname">닉네임</span>
+            </div>
+            <button id="btn-delete-story" class="btn-delete-note" title="이 사연 삭제하기">
+              <i data-lucide="trash-2"></i>
+            </button>
+          </div>
+          <div class="notebook-content">
+            <p id="detail-story" class="note-story-text">사연 내용이 들어갑니다.</p>
+          </div>
+          <div class="detail-note-footer">
+            <div class="detail-footer-inner">
+          
+            
+            </div>
+          </div>
         </div>
- <!-- Floating Retro LP Player Panel -->
-      <div class="detail-lp-panel" id="detail-lp-panel">
-        <div class="turntable-deck">
-          <div class="turntable-platter">
-            <div class="vinyl-record spinning" id="detail-vinyl-record">
-              <div class="vinyl-grooves"></div>
-              <div class="vinyl-label">
-                <div class="vinyl-label-center"></div>  
+
+        <!-- Floating Retro LP Player Panel on the Right -->
+        <div class="detail-lp-panel" id="detail-lp-panel">
+          <div class="turntable-deck">
+            <div class="turntable-platter">
+              <div class="vinyl-record spinning" id="detail-vinyl-record">
+                <div class="vinyl-grooves"></div>
+                <div class="vinyl-label">
+                  <div class="vinyl-label-center"></div>
+                </div>
               </div>
             </div>
-           </div>
-          <div class="tone-arm active" id="detail-tone-arm"></div>
-          <div class="lp-spindle-peg"></div>
-          <div class="deck-controls">
-            <div class="deck-dial"></div>
-            <div class="deck-slider-groove">
-              <div class="deck-slider-knob"></div>
+            <!-- Vintage metallic tone arm needle sitting on top of LP -->
+            <div class="tone-arm active" id="detail-tone-arm"></div>
+            <!-- Platter peg spindle in center -->
+            <div class="lp-spindle-peg"></div>
+            <!-- Turntable deck details: dial and pitch slider -->
+            <div class="deck-controls">
+              <div class="deck-dial"></div>
+              <div class="deck-slider-groove">
+                <div class="deck-slider-knob"></div>
+              </div>
             </div>
           </div>
-        </div>
         </div>
     </div>
   </div>
@@ -262,7 +276,7 @@
         
         <div class="paper-header">
           <h2>📢 안내사항</h2>
-          <p class="paper-sub">무엇이든 물어보CEO! 안내</p>
+          <p class="paper-sub"> 대표이사와의 대화 안내</p>
         </div>
         <div class="notice-content">
           <p>오늘 이 시간은 대표이사님과 함께 회사의 미래와 비전을 공유하고,<br>여러분의 반짝이는 생각과 궁금증을 자유롭게 나누는 시간입니다.</p>
@@ -272,10 +286,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Firebase SDK (compat v10) -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
