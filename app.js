@@ -88,12 +88,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const storyFormPaper = document.getElementById('story-form-paper');
   const inputNickname = document.getElementById('input-nickname');
   const inputStory = document.getElementById('input-story');
-  const inputSong = document.getElementById('input-song');
+  
 
   // Detail elements
   const detailNickname = document.getElementById('detail-nickname');
   const detailStory = document.getElementById('detail-story');
-  const detailRequestedSong = document.getElementById('detail-requested-song');
+
   const btnDeleteStory = document.getElementById('btn-delete-story');
   const btnYoutubeLink = document.getElementById('btn-youtube-link');
   const btnYoutubeText = document.getElementById('btn-youtube-text');
@@ -125,10 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="pushpin"></div>
       <div class="note-nickname">${escapeHTML(story.nickname)}</div>
       <div class="note-story-snippet">${escapeHTML(story.story)}</div>
-      <div class="note-song-title">
-        <i data-lucide="music"></i>
-        <span>${escapeHTML(story.song)}</span>
-      </div>
+     
     `;
 
     note.addEventListener('click', () => openDetailModal(story));
@@ -160,16 +157,6 @@ document.addEventListener('DOMContentLoaded', () => {
     activeStoryId = story.id;
     detailNickname.textContent = story.nickname;
     detailStory.textContent = story.story;
-    detailRequestedSong.textContent = story.song;
-
-    const cleanSongQuery = story.song.trim();
-    btnYoutubeLink.href = `https://www.youtube.com/results?search_query=${encodeURIComponent(cleanSongQuery)}`;
-
-    const maxDisplayLen = 22;
-    const displaySong = cleanSongQuery.length > maxDisplayLen 
-      ? cleanSongQuery.substring(0, maxDisplayLen) + '...' 
-      : cleanSongQuery;
-    btnYoutubeText.textContent = `"${displaySong}" 재생하기`;
 
     showModal(modalDetail);
 
@@ -350,9 +337,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const nickname = inputNickname.value.trim();
     const story = inputStory.value.trim();
-    const song = inputSong.value.trim();
-
-    if (!nickname || !story || !song) return;
+    
+    if (!nickname || !story ) return;
 
     const surfaceRect = chalkboard.getBoundingClientRect();
     const paperRect = storyFormPaper.getBoundingClientRect();
@@ -378,7 +364,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const newStoryData = {
           nickname,
           story,
-          song,
           x: endXPercent,
           y: endYPercent,
           rotation: randomRotation,
