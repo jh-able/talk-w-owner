@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Counter Stats ---
   const updateStats = () => {
-    storyCounter.textContent = `사연: ${stories.length}개`;
+    storyCounter.textContent = `: ${stories.length}개`;
   };
 
   // --- Sticky Note Rendering ---
